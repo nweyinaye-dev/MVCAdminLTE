@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MSS.Database.AppDbContextModels;
+using MSS.Domain.Features.Auth;
 
 
 namespace MSS.Domain
@@ -12,7 +13,7 @@ namespace MSS.Domain
         public static WebApplicationBuilder AddDomain(this WebApplicationBuilder builder)
         {
             // Features
-           // builder.Services.AddScoped<IMeetingService, MeetingService>();
+           builder.Services.AddScoped<IAuthService, AuthService>();
 
 
             return builder;

@@ -1,8 +1,18 @@
+using MVCAdminLTE.ApiServices;
+using MVCAdminLTE.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<BearerTokenHandler>();
+// IHttpClientFactory For to call api
+builder.Services.AddHttpClient("BackendApi", (client) =>
+ client.BaseAddress = new Uri(builder.Configuration["BackendApiUrl"]!)
+).AddHttpMessageHandler<BearerTokenHandler>();
 
+builder.Services.AddScoped<AuthApiService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

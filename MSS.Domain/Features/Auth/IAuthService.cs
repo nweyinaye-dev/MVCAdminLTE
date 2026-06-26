@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MSS.Domain.Features.Auth
 {
-    internal interface IAuthService
+    public interface IAuthService
     {
+        Task<AuthResponse?> LoginAsync(AuthRequest request);
     }
 }
