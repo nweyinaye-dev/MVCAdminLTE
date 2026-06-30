@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MSS.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     [Authorize]
     public class WeatherForecastController : ControllerBase
     {

@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using MVCAdminLTE.ApiServices;
+using MVCAdminLTE.Extensions;
 using MVCAdminLTE.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<BearerTokenHandler>();
@@ -13,6 +14,19 @@ builder.Services.AddHttpClient("BackendApi", (client) =>
 ).AddHttpMessageHandler<BearerTokenHandler>();
 
 builder.Services.AddScoped<AuthApiService>();
+builder.Services.AddScoped<WeatherApiService>();
+builder.Services.AddMvcCookieAuthentication();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(24);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+});
+
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +46,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();
