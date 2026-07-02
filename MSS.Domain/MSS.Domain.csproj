@@ -15,4 +15,8 @@
     <ProjectReference Include="..\MSS.Database\MSS.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+  </ItemGroup>
+
 </Project>

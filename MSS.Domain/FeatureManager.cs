@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MSS.Database.AppDbContextModels;
 using MSS.Domain.Features.Auth;
+using MSS.Domain.Features.Permissions;
+using MSS.Domain.Features.Products;
+using MSS.Domain.Features.Roles;
+using MSS.Domain.Features.Users;
+using System.Security;
 
 
 namespace MSS.Domain
@@ -14,8 +20,11 @@ namespace MSS.Domain
         {
             // Features
            builder.Services.AddScoped<IAuthService, AuthService>();
-
-
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            
             return builder;
         }
 

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MSS.Api.Services;
 using MSS.Domain;
+using MSS.Domain.Common;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +61,11 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+builder.Services.AddScoped<IDapperService>(provider => new DapperService(connectionString));
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
